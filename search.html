@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Game Watch - Game Library</title>
+  <title>Game Watch - Search</title>
   <link rel="stylesheet" href="main.css">
 </head>
 <body>
@@ -38,11 +38,6 @@
             { title: "Roblox" },
             { title: "Counter-Strike 2"},
             { title: "Apex Legends" },
-            { title: "League of Legends" },
-            { title: "Call of Duty: Warzone" },
-            { title: "Valorant" },
-            { title: "Dota 2"},
-            { title: "PUBG: Battlegrounds"}
         ];
 
         const searchInput = document.getElementById("search");
@@ -170,21 +165,22 @@
                     gameCard.className = "game-card bronze-card";
                 }
 
-
                 gameCard.innerHTML = `
-                    <div class="game-image"></div>
-                    <div class="game-info">
+                    <div class="game-image game-image-${games.indexOf(game) + 1}"></div>
+                        <div class="game-info">
                         <h2 class="game-title">${game.title}</h2>
                         <p class="rank"><span>#${games.indexOf(game) + 1}</span></p>
                         <p class="monthly-players">
                         ${getMonthlyPlayers(game.title)}
                         </p>
                     </div>
-                `;
+                    `;
+        
                 resultsContainer.appendChild(gameCard);
             });
         }
 
+        
         function getMonthlyPlayers(title) {
             switch (title) {
                 case "Minecraft":
@@ -197,20 +193,11 @@
                     return "65M+ Monthly Players";
                 case "Apex Legends":
                     return "64M+ Monthly Players";
-                case "League of Legends":
-                    return "64M+ Monthly Players";
-                case "Call of Duty: Warzone":
-                    return "58M+ Monthly Players";
-                case "Valorant":
-                    return "55M+ Monthly Players";
-                case "Dota 2":
-                    return "50M+ Monthly Players";
-                case "PUBG: Battlegrounds":
-                    return "45M+ Monthly Players";
                 default:
                     return "N/A";
             }
         }
+
     </script>
 </body>
 </html>
