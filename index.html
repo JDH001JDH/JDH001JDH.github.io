@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Game Watch - Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+    <div class="top-bar">
+        <h1 class="title">Game Watch</h1>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="trending.html">Trending</a>
+        </div>
+        <div class="search-container">
+            <input type="text" id="search" placeholder="Search for a game..." autocomplete="off" />
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+    </div>
+
+    <div class="hero">
+        <img src="Logo.png" alt="Game Watch Logo">
+        <div class="hero-text">
+            <h1>Welcome to Game Watch</h1>
+            <p>Explore trending games, learn how to play them, and find direct download links all in one place. Whether you're searching for your next favorite game or diving into the latest releases, Game-Watch makes it easy and fun.</p>
+        </div>
+    </div>
+
+    <h2 class="podium-title">Most Popular</h2>
+
+    <div class="podium">
+
+        <a href="fortnite.html" class="podium-button">
+            <div class="podium-slot silver-slot">
+                <div class="game-card silver-card">
+                    <div class="game-image-2"></div>
+                    <div class="game-info">
+                        <h2 class="game-title">Fortnite</h2>
+                        <p class="rank"><span>#2</span></p>
+                        <p class="monthly-players">223M+ Monthly Players</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+
+        <a href="minecraft.html" class="podium-button">
+            <div class="podium-slot gold-slot">
+                <div class="game-card gold-card">
+                    <div class="game-image-1"></div>
+                    <div class="game-info">
+                        <h2 class="game-title">Minecraft</h2>
+                        <p class="rank"><span>#1</span></p>
+                        <p class="monthly-players">228M+ Monthly Players</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+  
+        <a href="roblox.html" class="podium-button">
+            <div class="podium-slot bronze-slot">
+                <div class="game-card bronze-card">
+                    <div class="game-image-3"></div>
+                    <div class="game-info">
+                        <h2 class="game-title">Roblox</h2>
+                        <p class="rank"><span>#3</span></p>
+                        <p class="monthly-players">205M+ Monthly Players</p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2025 Game Watch</p>
+    </div>
+
+    <script>
+        const games = [
+            { title: "Minecraft" },
+            { title: "Fortnite" },
+            { title: "Roblox" },
+            { title: "Counter-Strike 2"},
+            { title: "Apex Legends" },
+        ];
+
+        const searchInput = document.getElementById("search");
+        const suggestionsContainer = document.getElementById("suggestions");
+        let highlightedIndex = -1;
+
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.toLowerCase();
+            suggestionsContainer.innerHTML = "";
+            highlightedIndex = -1;
+
+            if (query.length === 0) {
+                suggestionsContainer.style.display = "none";
+                return;
+            }
+
+            const matches = games.filter(game => game.title.toLowerCase().includes(query));
+
+            if (matches.length === 0) {
+                suggestionsContainer.style.display = "none";
+                return;
+            }
+
+            matches.forEach((game, index) => {
+                const div = document.createElement("div");
+                div.textContent = game.title;
+                div.addEventListener("click", () => {
+                    searchInput.value = game.title;
+                    suggestionsContainer.innerHTML = "";
+                    suggestionsContainer.style.display = "none";
+                    window.location.href = `search.html?q=${encodeURIComponent(game.title)}`;
+                });
+                suggestionsContainer.appendChild(div);
+            });
+            suggestionsContainer.style.display = "block";
+        });
+
+        searchInput.addEventListener("keydown", (e) => {
+            const suggestionDivs = suggestionsContainer.getElementsByTagName("div");
+
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+
+                if (highlightedIndex < suggestionDivs.length - 1) {
+                    highlightedIndex++;
+                } else {
+                    highlightedIndex = 0;
+                }
+                updateHighlight();
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+
+                if (highlightedIndex > 0) {
+                    highlightedIndex--;
+                } else {
+                    highlightedIndex = suggestionDivs.length - 1;
+                }
+                updateHighlight();
+            } else if (e.key === "Enter") {
+                e.preventDefault();
+
+                if (highlightedIndex >= 0 && highlightedIndex < suggestionDivs.length) {
+                    const selectedGameTitle = suggestionDivs[highlightedIndex].textContent;
+                    searchInput.value = selectedGameTitle;
+                    suggestionsContainer.innerHTML = "";
+                    suggestionsContainer.style.display = "none";
+                    window.location.href = `search.html?q=${encodeURIComponent(selectedGameTitle)}`;
+                } else if (searchInput.value.trim() !== "") {
+                    window.location.href = `search.html?q=${encodeURIComponent(searchInput.value)}`;
+                }
+            } else if (e.key === "Escape") {
+                suggestionsContainer.innerHTML = "";
+                suggestionsContainer.style.display = "none";
+                highlightedIndex = -1;
+            }
+        });
+
+        function updateHighlight() {
+            const suggestionDivs = suggestionsContainer.getElementsByTagName("div");
+            for (let i = 0; i < suggestionDivs.length; i++) {
+                if (i === highlightedIndex) {
+                    suggestionDivs[i].classList.add("highlighted");
+                } else {
+                    suggestionDivs[i].classList.remove("highlighted");
+                }
+            }
+        }
+
+        document.addEventListener("click", (e) => {
+            if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) {
+                suggestionsContainer.style.display = "none";
+                highlightedIndex = -1;
+            }
+        });
+    </script>
+</body>
+</html>
