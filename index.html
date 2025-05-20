@@ -1,0 +1,187 @@
+<!DOCTYPE html> <!-- HTML doctype declaration -->
+<html lang="en"> <!-- Start of HTML document, English language -->
+<head> <!-- Start of head section -->
+  <meta charset="UTF-8" /> <!-- Character encoding set to UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Responsive viewport settings -->
+  <title>Game Watch - Home</title> <!-- Title of the page -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap" rel="stylesheet"> <!-- Google Fonts link -->
+  <link rel="stylesheet" href="index.css"> <!-- Link to external CSS file -->
+</head> <!-- End of head section -->
+<body> <!-- Start of body section -->
+
+    <!-- Top navigation bar -->
+    <div class="top-bar"> <!-- Main navigation bar container -->
+        <h1 class="title">Game Watch</h1> <!-- Website title -->
+        <div class="nav-links"> <!-- Navigation links container -->
+            <a href="index.html">Home</a> <!-- Home link -->
+            <a href="trending.html">Trending</a> <!-- Trending link -->
+        </div>
+        <div class="search-container"> <!-- Search bar container -->
+            <input type="text" id="search" placeholder="Search for a game..." autocomplete="off" /> <!-- Search input field -->
+            <div class="suggestions" id="suggestions"></div> <!-- Suggestions dropdown container -->
+        </div>
+    </div> <!-- End of top-bar -->
+
+    <!-- Hero section with logo and intro -->
+    <div class="hero"> <!-- Hero section container -->
+        <img src="Logo.png" alt="Game Watch Logo"> <!-- Logo image -->
+        <div class="hero-text"> <!-- Hero text container -->
+            <h1>Welcome to Game Watch</h1> <!-- Welcome heading -->
+            <p>Explore trending games, learn how to play them, and find direct download links all in one place. Whether you're searching for your next favorite game or diving into the latest releases, Game-Watch makes it easy and fun.</p> <!-- Introductory text -->
+        </div>
+    </div> <!-- End of hero section -->
+
+    <h2 class="podium-title">Most Popular</h2> <!-- Section title for most popular games -->
+
+    <div class="podium"> <!-- Podium section for top games -->
+        <!-- Fortnite card -->
+        <a href="fortnite.html" class="podium-button"> <!-- Clickable card for Fortnite -->
+            <div class="podium-slot silver-slot"> <!-- Silver slot container -->
+                <div class="game-card silver-card"> <!-- Game card container for Fortnite -->
+                    <div class="game-image-2"></div> <!-- Game image for Fortnite -->
+                    <div class="game-info"> <!-- Info container for Fortnite -->
+                        <h2 class="game-title">Fortnite</h2> <!-- Game title -->
+                        <p class="rank"><span>#2</span></p> <!-- Rank number -->
+                        <p class="monthly-players">223M+ Monthly Players</p> <!-- Player count -->
+                    </div>
+                </div>
+            </div>
+        </a> <!-- End of Fortnite card -->
+
+        <!-- Minecraft card -->
+        <a href="minecraft.html" class="podium-button"> <!-- Clickable card for Minecraft -->
+            <div class="podium-slot gold-slot"> <!-- Gold slot container -->
+                <div class="game-card gold-card"> <!-- Game card container for Minecraft -->
+                    <div class="game-image-1"></div> <!-- Game image for Minecraft -->
+                    <div class="game-info"> <!-- Info container for Minecraft -->
+                        <h2 class="game-title">Minecraft</h2> <!-- Game title -->
+                        <p class="rank"><span>#1</span></p> <!-- Rank number -->
+                        <p class="monthly-players">228M+ Monthly Players</p> <!-- Player count -->
+                    </div>
+                </div>
+            </div>
+        </a> <!-- End of Minecraft card -->
+  
+        <!-- Roblox card -->
+        <a href="roblox.html" class="podium-button"> <!-- Clickable card for Roblox -->
+            <div class="podium-slot bronze-slot"> <!-- Bronze slot container -->
+                <div class="game-card bronze-card"> <!-- Game card container for Roblox -->
+                    <div class="game-image-3"></div> <!-- Game image for Roblox -->
+                    <div class="game-info"> <!-- Info container for Roblox -->
+                        <h2 class="game-title">Roblox</h2> <!-- Game title -->
+                        <p class="rank"><span>#3</span></p> <!-- Rank number -->
+                        <p class="monthly-players">205M+ Monthly Players</p> <!-- Player count -->
+                    </div>
+                </div>
+            </div>
+        </a> <!-- End of Roblox card -->
+    </div> <!-- End of podium section -->
+
+    <!-- Footer section -->
+    <div class="footer"> <!-- Footer container -->
+        <p>&copy; 2025 Game Watch</p> <!-- Copyright -->
+    </div> <!-- End of footer -->
+
+    <!-- Search bar script -->
+    <script>
+    // List of games for search suggestions
+    const games = [ // Start of games array
+        { title: "Minecraft" }, // Minecraft game object
+        { title: "Fortnite" }, // Fortnite game object
+        { title: "Roblox" }, // Roblox game object
+        { title: "Counter-Strike 2"}, // Counter-Strike 2 game object
+        { title: "Apex Legends" }, // Apex Legends game object
+    ]; // End of games array
+
+    const searchInput = document.getElementById("search"); // Get the search input element by its ID
+    const suggestionsContainer = document.getElementById("suggestions"); // Get the suggestions container element by its ID
+    let highlightedIndex = -1; // Initialize the highlighted suggestion index to -1 (none highlighted)
+
+    searchInput.addEventListener("input", () => { // Add event listener for input event on search box
+        const query = searchInput.value.toLowerCase(); // Get the input value and convert to lowercase
+        suggestionsContainer.innerHTML = ""; // Clear any previous suggestions
+        highlightedIndex = -1; // Reset the highlighted index
+
+        if (query.length === 0) { // If the input is empty
+            suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+            return; // Stop further execution
+        }
+
+        const matches = games.filter(game => game.title.toLowerCase().includes(query)); // Filter games that match the input
+
+        if (matches.length === 0) { // If there are no matches
+            suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+            return; // Stop further execution
+        }
+
+        matches.forEach((game, index) => { // For each matching game
+            const div = document.createElement("div"); // Create a new div element for the suggestion
+            div.textContent = game.title; // Set the text of the div to the game title
+            div.addEventListener("click", () => { // Add click event to the suggestion
+                searchInput.value = game.title; // Set the search input to the clicked suggestion
+                suggestionsContainer.innerHTML = ""; // Clear suggestions
+                suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                window.location.href = `search.html?q=${encodeURIComponent(game.title)}`; // Redirect to search results page
+            }); // End of click event
+            suggestionsContainer.appendChild(div); // Add the suggestion div to the suggestions container
+        }); // End of forEach
+        suggestionsContainer.style.display = "block"; // Show the suggestions dropdown
+    }); // End of input event listener
+
+    searchInput.addEventListener("keydown", (e) => { // Add event listener for keydown event on search box
+        const suggestionDivs = suggestionsContainer.getElementsByTagName("div"); // Get all suggestion divs
+
+        if (e.key === "ArrowDown") { // If the down arrow key is pressed
+            e.preventDefault(); // Prevent default cursor movement
+            if (highlightedIndex < suggestionDivs.length - 1) { // If not at the last suggestion
+                highlightedIndex++; // Move highlight down
+            } else { // If at the last suggestion
+                highlightedIndex = 0; // Loop back to the first suggestion
+            }
+            updateHighlight(); // Update the highlight on suggestions
+        } else if (e.key === "ArrowUp") { // If the up arrow key is pressed
+            e.preventDefault(); // Prevent default cursor movement
+            if (highlightedIndex > 0) { // If not at the first suggestion
+                highlightedIndex--; // Move highlight up
+            } else { // If at the first suggestion
+                highlightedIndex = suggestionDivs.length - 1; // Loop to the last suggestion
+            }
+            updateHighlight(); // Update the highlight on suggestions
+        } else if (e.key === "Enter") { // If the enter key is pressed
+            e.preventDefault(); // Prevent form submission
+            if (highlightedIndex >= 0 && highlightedIndex < suggestionDivs.length) { // If a suggestion is highlighted
+                const selectedGameTitle = suggestionDivs[highlightedIndex].textContent; // Get the highlighted suggestion text
+                searchInput.value = selectedGameTitle; // Set the search input to the highlighted suggestion
+                suggestionsContainer.innerHTML = ""; // Clear suggestions
+                suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                window.location.href = `search.html?q=${encodeURIComponent(selectedGameTitle)}`; // Redirect to search results page
+            } else if (searchInput.value.trim() !== "") { // If no suggestion is highlighted but input is not empty
+                window.location.href = `search.html?q=${encodeURIComponent(searchInput.value)}`; // Redirect to search results page
+            }
+        } else if (e.key === "Escape") { // If the escape key is pressed
+            suggestionsContainer.innerHTML = ""; // Clear suggestions
+            suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+            highlightedIndex = -1; // Reset the highlighted index
+        }
+    }); // End of keydown event listener
+
+    function updateHighlight() { // Function to update the highlighted suggestion
+        const suggestionDivs = suggestionsContainer.getElementsByTagName("div"); // Get all suggestion divs
+        for (let i = 0; i < suggestionDivs.length; i++) { // Loop through all suggestions
+            if (i === highlightedIndex) { // If this suggestion is the highlighted one
+                suggestionDivs[i].classList.add("highlighted"); // Add the highlighted class
+            } else { // If not the highlighted suggestion
+                suggestionDivs[i].classList.remove("highlighted"); // Remove the highlighted class
+            }
+        }
+    } // End of updateHighlight function
+
+    document.addEventListener("click", (e) => { // Add event listener for clicks anywhere on the document
+        if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) { // If the click is outside the suggestions and search input
+            suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+            highlightedIndex = -1; // Reset the highlighted index
+        }
+    }); // End of document click event listener
+    </script> <!-- End of search bar script -->
+</body> <!-- End of body section -->
+</html> <!-- End of HTML document -->

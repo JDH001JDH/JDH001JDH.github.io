@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap'); /* Import Poppins font */
+/* General body styling */
+body {
+    background-color: #1a1a2e; /* Set background color */
+    color: white; /* Set default text color */
+    font-family: 'Poppins', sans-serif; /* Set font family */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    text-align: center; /* Center text */
+    background: linear-gradient(-45deg, #003366, #004080, #000000, #1a1a1a); /* Gradient background */
+    background-size: 300% 300%; /* Size for animation */
+    animation: gradientAnimation 6s ease infinite; /* Animate background */
+}
+
+/* Top Bar */
+.top-bar {
+    display: flex; /* Use flexbox */
+    align-items: center; /* Center items vertically */
+    justify-content: space-between; /* Space between items */
+    box-shadow: 0px 4px 10px rgba(0, 136, 204, 0.5); /* Soft glow */
+    background: linear-gradient(-45deg, #003366, #004080, #000000, #1a1a1a); /* Gradient background */
+    background-size: 300% 300%; /* Size for animation */
+    animation: gradientAnimation 6s ease infinite; /* Animate background */
+    background: rgba(28, 28, 49, 0.6); /* Glass effect background */
+    backdrop-filter: blur(10px); /* Glass effect */
+    border-bottom: 3px solid var(--secondary-color); /* Bottom border */
+}
+
+/* Title Styling */
+.title {
+    font-size: 48px; /* Large font size */
+    font-weight: bold; /* Bold text */
+    text-transform: uppercase; /* Uppercase letters */
+    letter-spacing: 2px; /* Space between letters */
+    color: #0088cc; /* Blue color */
+    text-shadow: 2px 2px 12px rgba(0, 136, 204, 0.8); /* Text shadow */
+    margin-left: 20px; /* Left margin */
+}
+
+/* Navigation & Search */
+.nav-links {
+    display: flex; /* Use flexbox */
+    gap: 15px; /* Space between links */
+    justify-content: center; /* Center links */
+    align-items: center; /* Center vertically */
+}
+
+.nav-links a {
+    color: white; /* Link color */
+    text-decoration: none; /* No underline */
+    font-size: 24px; /* Font size */
+    padding: 12px 20px; /* Padding */
+    background-color: #252546; /* Background color */
+    border-radius: 50px; /* Rounded buttons */
+    transition: 0.3s; /* Smooth transition */
+    box-shadow: 0px 4px 8px rgba(0, 136, 204, 0.4); /* Button shadow */
+}
+
+.nav-links a:hover {
+    background-color: #0088cc; /* Hover color */
+}
+
+/* Animated gradient background */
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50%; } /* Start position */
+    50% { background-position: 100% 50%; } /* Middle position */
+    100% { background-position: 0% 50%; } /* End position */
+}
+
+.search-container {
+    display: flex; /* Flexbox */
+    align-items: center; /* Center vertically */
+    margin-top: 0; /* No top margin */
+    margin-right: 30px; /* Right margin */
+    width: auto; /* Auto width */
+    margin-left: 1rem; /* Left margin */
+    position: relative; /* For suggestions dropdown */
+}
+
+#search {
+    padding: 0.5rem 1rem; /* Padding */
+    font-size: 0.9rem; /* Font size */
+    border: 3px solid #0088cc; /* Blue border */
+    border-radius: 25px; /* Rounded input */
+    width: 250px; /* Input width */
+    background-color: white; /* White background */
+    color: #333; /* Text color */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Shadow */
+    transition: all 0.3s ease; /* Smooth transitions */
+    outline: none; /* No outline */
+    font-family: 'Poppins', sans-serif; /* Font */
+}
+
+#search:focus {
+    border-color: #00bfff; /* Blue border on focus */
+    box-shadow: 0 4px 8px rgba(0, 191, 255, 0.15); /* Shadow on focus */
+}
+
+.suggestions {
+    position: absolute; /* Absolute position */
+    top: 100%; /* Below input */
+    left: 0; /* Align left */
+    right: 0; /* Align right */
+    background-color: rgb(32,31,49); /* Dropdown background */
+    border: 3px solid #0088cc; /* Blue border */
+    border-radius: 10px; /* Rounded corners */
+    margin-top: 0.5rem; /* Space above */
+    overflow: auto; /* Scroll if needed */
+    max-height: 200px; /* Max height */
+    z-index: 10; /* On top */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+    display: none; /* Hidden by default */
+    font-family: 'Poppins', sans-serif; /* Font */
+}
+
+.suggestions div {
+    padding: 0.75rem 1rem; /* Padding */
+    font-size: 0.9rem; /* Font size */
+    color: rgb(50, 42, 208); /* Text color */
+    cursor: pointer; /* Pointer cursor */
+    transition: background-color 0.2s ease; /* Smooth hover */
+    white-space: nowrap; /* No wrap */
+    overflow: hidden; /* Hide overflow */
+    text-overflow: ellipsis; /* Ellipsis for overflow */
+    font-family: 'Poppins', sans-serif; /* Font */
+}
+
+.suggestions div:hover {
+    background-color: rgb(32,31,49); /* Hover background */
+    color: #0088cc; /* Hover text color */
+}
+
+.suggestions .highlighted {
+    background-color: rgb(32,31,49); /* Highlighted background */
+    color: #0088cc; /* Highlighted text */
+}
+
+/* Game Library Section */                                                                               
+.search-page {
+    font-weight: bold; /* Bold text */
+    color: #0088cc; /* Blue color */
+    padding: 30px; /* Padding */
+}
+
+
+/* Game Cards Section */
+.result-grid {
+    display: flex; /* Flexbox */
+    flex-wrap: wrap; /* Wrap items */
+    gap: 20px; /* Space between cards */
+    justify-content: center; /* Center cards */
+    padding: 20px; /* Padding */
+}
+
+.footer {
+    text-align: center; /* Center text */
+    padding: 20px; /* Padding */
+    background-color: #0f0f1d; /* Footer background */
+    border-top: 4px solid #252546; /* Top border */
+    color: #ccc; /* Text color */
+    box-shadow: 0px -4px 10px rgba(0, 136, 204, 0.3); /* Shadow */
+    position: relative; /* Positioning */
+    align-items: center; /* Center items */
+    justify-content: space-between; /* Space between items */
+}
+
+/* Game Card Styling */
+.game-card {
+    background-color: #252546; /* Card background */
+    padding: 25px; /* Padding */
+    border-radius: 15px; /* Rounded corners */
+    width: 300px; /* Card width */
+    box-shadow: 0px 4px 12px rgba(0, 136, 204, 0.3); /* Shadow */
+    transition: transform 0.3s ease-in-out; /* Smooth scaling */
+    text-decoration: none; /* No underline */
+    display: flex; /* Flexbox */
+    flex-direction: column; /* Column layout */
+}
+
+.game-card:hover {
+    transform: scale(1.05); /* Scale up on hover */
+}
+
+/* Game Card Background Colors */
+.gold-card {
+    border: 4px solid #FFD700; /* Gold border */
+    box-shadow: 0px 0px 15px rgba(255, 215, 0, 0.6); /* Gold shadow */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Padding */
+    background: linear-gradient(#252546, #1a1a1a) padding-box; /* Gradient background */
+}
+
+.silver-card {
+    border: 4px solid #C0C0C0; /* Silver border */
+    box-shadow: 0px 0px 15px rgba(192, 192, 192, 0.5); /* Silver shadow */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Padding */
+    background: linear-gradient(#252546, #1a1a1a) padding-box; /* Gradient background */
+}
+
+.bronze-card {
+    border: 4px solid #CD7F32; /* Bronze border */
+    box-shadow: 0px 0px 15px rgba(205, 127, 50, 0.5); /* Bronze shadow */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Padding */
+    background: linear-gradient(#252546, #1a1a1a) padding-box; /* Gradient background */
+   
+}
+
+/* Basic game card - Blue to Black border */
+.basic {
+    border: 4px solid transparent; /* Transparent border */
+    border-radius: 15px; /* Rounded corners */
+    padding: 20px; /* Padding */
+    background: linear-gradient(#252546, #1a1a1a) padding-box, 
+                linear-gradient(45deg, #0056b3, #000000) border-box; /* Gradient border */
+    box-shadow: 0px 8px 20px rgba(0, 136, 204, 0.4); /* Shadow */
+}
+
+/* Image styling with rounded corners */
+.game-image-1, .game-image-2, .game-image-3, .game-image-4, .game-image-5 {
+    width: 100%; /* Full width */
+    height: 200px; /* Fixed height */
+    background-size: cover; /* Cover background */
+    background-position: center; /* Center image */
+    border-radius: 10px; /* Rounded corners */
+}
+
+.game-image-1 {
+    background-image: url('game1.png'); /* Minecraft image */
+}
+
+.game-image-2 {
+    background-image: url('game2.png'); /* Fortnite image */
+}
+
+.game-image-3 {
+    background-image: url('game3.png'); /* Roblox image */
+}
+
+.game-image-4 {
+    background-image: url('game4.png'); /* Counter-Strike 2 image */
+}
+
+.game-image-5 {
+    background-image: url('game5.png'); /* Apex Legends image */
+}
+
+.game-info {
+    text-align: center; /* Center text */
+    color: white; /* White text */
+    margin-top: 10px; /* Top margin */
+}
+
+.game-title {
+    font-size: 24px; /* Title size */
+    color: #0088cc; /* Blue */
+}
+
+/* Rank styling (using the Affair font) */
+.rank span {
+    font-family: 'Poppins', sans-serif; /* Apply Poppins font */
+    font-size: 28px; /* Font size */
+    font-weight: bold;  /* Bold */
+    font-style: italic; /* Italic */
+}
+
+/* Custom rank colors */
+.gold-card .rank span {
+    color: #ffd700; /* Gold */
+}
+
+.silver-card .rank span {
+    color: #c0c0c0; /* Silver */
+}
+
+.bronze-card .rank span {
+    color: #cd7f32; /* Bronze */
+}
+
+.basic .rank span {
+    color: #0088cc; /* Blue */
+}
+
+.monthly-players {
+    font-size: 18px; /* Player count size */
+    color: #ccc; /* Light gray */
+}
+

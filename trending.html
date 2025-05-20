@@ -1,0 +1,198 @@
+<!DOCTYPE html> <!-- HTML doctype declaration -->
+<html lang="en"> <!-- Start of HTML document, English language -->
+<head> <!-- Start of head section -->
+    <meta charset="UTF-8"> <!-- Character encoding set to UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Responsive viewport settings -->
+    <title>Game Watch - Trending</title> <!-- Title of the page -->
+    <link rel="stylesheet" href="trending.css"> <!-- Link to external CSS file -->
+</head> <!-- End of head section -->
+<body> <!-- Start of body section -->
+
+    <div class="top-bar"> <!-- Top navigation bar -->
+        <h1 class="title">Game Watch</h1> <!-- Website title -->
+        <div class="nav-links"> <!-- Navigation links container -->
+            <a href="index.html">Home</a> <!-- Home link -->
+            <a href="trending.html">Trending</a> <!-- Trending link -->
+        </div>
+        <div class="search-container"> <!-- Search bar container -->
+            <input type="text" id="search" placeholder="Search for a game..." autocomplete="off" /> <!-- Search input field -->
+            <div class="suggestions" id="suggestions"></div> <!-- Suggestions dropdown container -->
+        </div>
+    </div> <!-- End of top-bar -->
+
+    <!-- Featured Section with Podium -->
+    <div class="featured"> <!-- Featured section container -->
+        <h2>Top Trending Games</h2> <!-- Section heading -->
+
+        <!-- Podium Section -->
+        <div class="podium"> <!-- Podium container -->
+
+            <a href="fortnite.html" class="podium-button"> <!-- Fortnite card link -->
+                <div class="podium-item silver"> <!-- Silver podium item -->
+                    <img src="game2.png" alt="Fortnite"> <!-- Fortnite image -->
+                    <h2>2nd - Fortnite</h2> <!-- Fortnite rank and name -->
+                    <p>223M+ Monthly Players</p> <!-- Fortnite player count -->
+                </div>
+            </a>
+
+            <a href="minecraft.html" class="podium-button"> <!-- Minecraft card link -->
+                <div class="podium-item gold"> <!-- Gold podium item -->
+                    <img src="game1.png" alt="Minecraft"> <!-- Minecraft image -->
+                    <h2>1st - Minecraft</h2> <!-- Minecraft rank and name -->
+                    <p>228M+ Monthly Players</p> <!-- Minecraft player count -->
+                </div>
+            </a>
+
+            <a href="roblox.html" class="podium-button"> <!-- Roblox card link -->
+                <div class="podium-item bronze"> <!-- Bronze podium item -->
+                    <img src="game3.png" alt="Roblox"> <!-- Roblox image -->
+                    <h2>3rd - Roblox</h2> <!-- Roblox rank and name -->
+                    <p>205M+ Monthly Players</p> <!-- Roblox player count -->
+                </div>
+            </a>
+        </div> <!-- End of podium section -->
+
+        <!-- Leaderboard Table -->
+        <div class="leaderboard"> <!-- Leaderboard container -->
+            <table> <!-- Table for leaderboard -->
+                <thead> <!-- Table header -->
+                    <tr>
+                        <th>Rank</th> <!-- Rank column -->
+                        <th>Game Title</th> <!-- Game title column -->
+                        <th>Monthly Players</th> <!-- Player count column -->
+                    </tr>
+                </thead>
+                <tbody> <!-- Table body -->
+                    <tr class="clickable-row" data-href="counter-strike-2.html"> <!-- Counter-Strike 2 row -->
+                        <td>4</td> <!-- Rank -->
+                        <td>Counter-Strike 2</td> <!-- Game title -->
+                        <td>65M+</td> <!-- Player count -->
+                    </tr>
+                    <tr class="clickable-row" data-href="apex-legends.html"> <!-- Apex Legends row -->
+                        <td>5</td> <!-- Rank -->
+                        <td>Apex Legends</td> <!-- Game title -->
+                        <td>64M+</td> <!-- Player count -->
+                    </tr>
+                </tbody>
+            </table>
+        </div> <!-- End of leaderboard -->
+
+    </div> <!-- End of featured section -->
+
+    <!-- Footer -->
+    <div class="footer"> <!-- Footer container -->
+        <p>&copy; 2025 Game Watch</p> <!-- Copyright -->
+    </div> <!-- End of footer -->
+      
+    <script>
+        const games = [ // List of games for search suggestions
+            { title: "Minecraft" }, // Minecraft game object
+            { title: "Fortnite" }, // Fortnite game object
+            { title: "Roblox" }, // Roblox game object
+            { title: "Counter-Strike 2"}, // Counter-Strike 2 game object
+            { title: "Apex Legends" }, // Apex Legends game object
+        ];
+
+        const searchInput = document.getElementById("search"); // Get the search input element by its ID
+        const suggestionsContainer = document.getElementById("suggestions"); // Get the suggestions container element by its ID
+        let highlightedIndex = -1; // Initialize the highlighted suggestion index to -1 (none highlighted)
+
+        searchInput.addEventListener("input", () => { // Add event listener for input event on search box
+            const query = searchInput.value.toLowerCase(); // Get the input value and convert to lowercase
+            suggestionsContainer.innerHTML = ""; // Clear any previous suggestions
+            highlightedIndex = -1; // Reset the highlighted index
+
+            if (query.length === 0) { // If the input is empty
+                suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                return; // Stop further execution
+            }
+
+            const matches = games.filter(game => game.title.toLowerCase().includes(query)); // Filter games that match the input
+
+            if (matches.length === 0) { // If there are no matches
+                suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                return; // Stop further execution
+            }
+
+            matches.forEach((game, index) => { // For each matching game
+                const div = document.createElement("div"); // Create a new div element for the suggestion
+                div.textContent = game.title; // Set the text of the div to the game title
+                div.addEventListener("click", () => { // Add click event to the suggestion
+                    searchInput.value = game.title; // Set the search input to the clicked suggestion
+                    suggestionsContainer.innerHTML = ""; // Clear suggestions
+                    suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                    window.location.href = `search.html?q=${encodeURIComponent(game.title)}`; // Redirect to search results page
+                });
+                suggestionsContainer.appendChild(div); // Add the suggestion div to the suggestions container
+            });
+            suggestionsContainer.style.display = "block"; // Show the suggestions dropdown
+        });
+
+        searchInput.addEventListener("keydown", (e) => { // Add event listener for keydown event on search box
+            const suggestionDivs = suggestionsContainer.getElementsByTagName("div"); // Get all suggestion divs
+
+            if (e.key === "ArrowDown") { // If the down arrow key is pressed
+                e.preventDefault(); // Prevent default cursor movement
+
+                if (highlightedIndex < suggestionDivs.length - 1) { // If not at the last suggestion
+                    highlightedIndex++; // Move highlight down
+                } else { // If at the last suggestion
+                    highlightedIndex = 0; // Loop back to the first suggestion
+                }
+                updateHighlight(); // Update the highlight on suggestions
+            } else if (e.key === "ArrowUp") { // If the up arrow key is pressed
+                e.preventDefault(); // Prevent default cursor movement
+
+                if (highlightedIndex > 0) { // If not at the first suggestion
+                    highlightedIndex--; // Move highlight up
+                } else { // If at the first suggestion
+                    highlightedIndex = suggestionDivs.length - 1; // Loop to the last suggestion
+                }
+                updateHighlight(); // Update the highlight on suggestions
+            } else if (e.key === "Enter") { // If the enter key is pressed
+                e.preventDefault(); // Prevent form submission
+
+                if (highlightedIndex >= 0 && highlightedIndex < suggestionDivs.length) { // If a suggestion is highlighted
+                    const selectedGameTitle = suggestionDivs[highlightedIndex].textContent; // Get the highlighted suggestion text
+                    searchInput.value = selectedGameTitle; // Set the search input to the highlighted suggestion
+                    suggestionsContainer.innerHTML = ""; // Clear suggestions
+                    suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                    window.location.href = `search.html?q=${encodeURIComponent(selectedGameTitle)}`; // Redirect to search results page
+                } else if (searchInput.value.trim() !== "") { // If no suggestion is highlighted but input is not empty
+                    window.location.href = `search.html?q=${encodeURIComponent(searchInput.value)}`; // Redirect to search results page
+                }
+            } else if (e.key === "Escape") { // If the escape key is pressed
+                suggestionsContainer.innerHTML = ""; // Clear suggestions
+                suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                highlightedIndex = -1; // Reset the highlighted index
+            }
+        });
+
+        function updateHighlight() { // Function to update the highlighted suggestion
+            const suggestionDivs = suggestionsContainer.getElementsByTagName("div"); // Get all suggestion divs
+            for (let i = 0; i < suggestionDivs.length; i++) { // Loop through all suggestions
+                if (i === highlightedIndex) { // If this suggestion is the highlighted one
+                    suggestionDivs[i].classList.add("highlighted"); // Add the highlighted class
+                } else { // If not the highlighted suggestion
+                    suggestionDivs[i].classList.remove("highlighted"); // Remove the highlighted class
+                }
+            }
+        }
+
+        document.addEventListener("click", (e) => { // Add event listener for clicks anywhere on the document
+            if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) { // If the click is outside the suggestions and search input
+                suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                highlightedIndex = -1; // Reset the highlighted index
+            }
+        });
+
+        document.querySelectorAll('.clickable-row').forEach(row => { // For each row with class 'clickable-row'
+            row.addEventListener('click', () => { // Add click event
+                window.location.href = row.getAttribute('data-href'); // Redirect to the page specified in data-href
+            });
+        });
+    </script> <!-- End of script -->
+</body> <!-- End of body section -->
+</html> <!-- End of HTML document -->
+
+

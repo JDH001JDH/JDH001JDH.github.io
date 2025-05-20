@@ -1,0 +1,195 @@
+<!DOCTYPE html> <!-- HTML doctype declaration -->
+<html lang="en"> <!-- Start of HTML document, English language -->
+<head> <!-- Start of head section -->
+  <meta charset="UTF-8" /> <!-- Character encoding set to UTF-8 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Responsive viewport settings -->
+  <title>Game Watch | Minecraft</title> <!-- Title of the page -->
+  <link rel="stylesheet" href="game-description.css" /> <!-- Link to external CSS file -->
+</head> <!-- End of head section -->
+<body> <!-- Start of body section -->
+  <!-- Overall container for flex layout -->
+  <div class="page-container"> <!-- Main page container -->
+
+    <!-- HEADER -->
+    <header class="top-bar"> <!-- Top navigation bar -->
+      <div class="header-left"> <!-- Left side of header -->
+        <h1 class="title">Game Watch</h1> <!-- Website title -->
+      </div>
+      <nav class="nav-links"> <!-- Navigation links container -->
+        <a href="index.html">Home</a> <!-- Home link -->
+        <a href="trending.html">Trending</a> <!-- Trending link -->
+      </nav>
+      <div class="search-container"> <!-- Search bar container -->
+        <input type="text" id="search" placeholder="Search for a game..." autocomplete="off" /> <!-- Search input field -->
+        <div class="suggestions" id="suggestions"></div> <!-- Suggestions dropdown container -->
+      </div>
+    </header> <!-- End of header -->
+
+    <!-- HERO SECTION -->
+    <section class="game-info-bar"> <!-- Game info bar section -->
+      <div class="sidebar"> <!-- Sidebar with game info -->
+        <h2>Minecraft</h2> <!-- Game title -->
+        <p class="rank">#1 Most Popular Game</p> <!-- Game rank -->
+        <p class="monthly-players">Over <strong>228M+</strong> Monthly Players</p> <!-- Player count -->
+        <p class="description">
+            Step into a world of limitless creativity and survival. Build, explore, and battle in the iconic blocky universe.
+        </p> <!-- Game description -->
+        <a href="https://www.minecraft.net" class="play-button">Play Now</a> <!-- Play now button -->
+      </div>
+    </section> <!-- End of hero section -->
+
+    <!-- Content Section for Details -->
+    <section class="content"> <!-- Main content section -->
+      <!-- Game Details Section -->
+      <div class="game-details"> <!-- Game details container -->
+        <h2>Game Information</h2> <!-- Section heading -->
+        <div class="details-grid"> <!-- Grid for details -->
+          <div class="detail-item"><strong>Release Date:</strong> Nov 18, 2011</div> <!-- Release date -->
+          <div class="detail-item"><strong>Star Rating:</strong> ★★★★★ (4.8/5)</div> <!-- Star rating -->
+          <div class="detail-item"><strong>Age Rating:</strong> E10+ (Everyone 10+)</div> <!-- Age rating -->
+          <div class="detail-item"><strong>Downloads:</strong> Over 600M+</div> <!-- Downloads -->
+          <div class="detail-item"><strong>Developer:</strong> Mojang Studios</div> <!-- Developer -->
+          <div class="detail-item"><strong>Game Type:</strong> Single &amp; Multiplayer</div> <!-- Game type -->
+          <div class="detail-item"><strong>Game Age:</strong> 13+ years</div> <!-- Game age -->
+        </div>
+      </div>
+    </section> <!-- End of content section -->
+    </main> <!-- End of main content (if used) -->
+
+    <!-- FOOTER -->
+    <footer class="footer"> <!-- Footer section -->
+      <p>&copy; 2025 Game Watch. All rights reserved.</p> <!-- Copyright -->
+    </footer> <!-- End of footer -->
+  </div> <!-- End of page container -->
+
+  <script>
+  // Wait for the DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", function() {
+      // List of games for search suggestions
+      const games = [
+          { title: "Minecraft" }, // Minecraft game object
+          { title: "Fortnite" }, // Fortnite game object
+          { title: "Roblox" }, // Roblox game object
+          { title: "Counter-Strike 2"}, // Counter-Strike 2 game object
+          { title: "Apex Legends" }, // Apex Legends game object
+      ];
+
+      const searchInput = document.getElementById("search"); // Get the search input element by its ID
+      const suggestionsContainer = document.getElementById("suggestions"); // Get the suggestions container element by its ID
+      let highlightedIndex = -1; // Initialize the highlighted suggestion index to -1 (none highlighted)
+
+      searchInput.addEventListener("input", () => { // Add event listener for input event on search box
+          const query = searchInput.value.toLowerCase(); // Get the input value and convert to lowercase
+          suggestionsContainer.innerHTML = ""; // Clear any previous suggestions
+          highlightedIndex = -1; // Reset the highlighted index
+
+          if (query.length === 0) { // If the input is empty
+              suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+              return; // Stop further execution
+          }
+
+          const matches = games.filter(game => game.title.toLowerCase().includes(query)); // Filter games that match the input
+
+          if (matches.length === 0) { // If there are no matches
+              suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+              return; // Stop further execution
+          }
+
+          matches.forEach((game, index) => { // For each matching game
+              const div = document.createElement("div"); // Create a new div element for the suggestion
+              div.textContent = game.title; // Set the text of the div to the game title
+              div.addEventListener("click", () => { // Add click event to the suggestion
+                  searchInput.value = game.title; // Set the search input to the clicked suggestion
+                  suggestionsContainer.innerHTML = ""; // Clear suggestions
+                  suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                  window.location.href = `search.html?q=${encodeURIComponent(game.title)}`; // Redirect to search results page
+              }); // End of click event
+              suggestionsContainer.appendChild(div); // Add the suggestion div to the suggestions container
+          }); // End of forEach
+          suggestionsContainer.style.display = "block"; // Show the suggestions dropdown
+      }); // End of input event listener
+
+      searchInput.addEventListener("keydown", (e) => { // Add event listener for keydown event on search box
+          const suggestionDivs = suggestionsContainer.getElementsByTagName("div"); // Get all suggestion divs
+
+          if (e.key === "ArrowDown") { // If the down arrow key is pressed
+              e.preventDefault(); // Prevent default cursor movement
+
+              if (highlightedIndex < suggestionDivs.length - 1) { // If not at the last suggestion
+                  highlightedIndex++; // Move highlight down
+              } else { // If at the last suggestion
+                  highlightedIndex = 0; // Loop back to the first suggestion
+              }
+              updateHighlight(); // Update the highlight on suggestions
+          } else if (e.key === "ArrowUp") { // If the up arrow key is pressed
+              e.preventDefault(); // Prevent default cursor movement
+
+              if (highlightedIndex > 0) { // If not at the first suggestion
+                  highlightedIndex--; // Move highlight up
+              } else { // If at the first suggestion
+                  highlightedIndex = suggestionDivs.length - 1; // Loop to the last suggestion
+              }
+              updateHighlight(); // Update the highlight on suggestions
+          } else if (e.key === "Enter") { // If the enter key is pressed
+              e.preventDefault(); // Prevent form submission
+
+              if (highlightedIndex >= 0 && highlightedIndex < suggestionDivs.length) { // If a suggestion is highlighted
+                  const selectedGameTitle = suggestionDivs[highlightedIndex].textContent; // Get the highlighted suggestion text
+                  searchInput.value = selectedGameTitle; // Set the search input to the highlighted suggestion
+                  suggestionsContainer.innerHTML = ""; // Clear suggestions
+                  suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+                  window.location.href = `search.html?q=${encodeURIComponent(selectedGameTitle)}`; // Redirect to search results page
+              } else if (searchInput.value.trim() !== "") { // If no suggestion is highlighted but input is not empty
+                  window.location.href = `search.html?q=${encodeURIComponent(searchInput.value)}`; // Redirect to search results page
+              }
+          } else if (e.key === "Escape") { // If the escape key is pressed
+              suggestionsContainer.innerHTML = ""; // Clear suggestions
+              suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+              highlightedIndex = -1; // Reset the highlighted index
+          }
+      }); // End of keydown event listener
+
+      function updateHighlight() { // Function to update the highlighted suggestion
+          const suggestionDivs = suggestionsContainer.getElementsByTagName("div"); // Get all suggestion divs
+          for (let i = 0; i < suggestionDivs.length; i++) { // Loop through all suggestions
+              if (i === highlightedIndex) { // If this suggestion is the highlighted one
+                  suggestionDivs[i].classList.add("highlighted"); // Add the highlighted class
+              } else { // If not the highlighted suggestion
+                  suggestionDivs[i].classList.remove("highlighted"); // Remove the highlighted class
+              }
+          }
+      } // End of updateHighlight function
+
+      document.addEventListener("click", (e) => { // Add event listener for clicks anywhere on the document
+          if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) { // If the click is outside the suggestions and search input
+              suggestionsContainer.style.display = "none"; // Hide the suggestions dropdown
+              highlightedIndex = -1; // Reset the highlighted index
+          }
+      }); // End of document click event listener
+  });
+  </script> <!-- End of search bar script -->
+
+  <script>
+  // Wait for the DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", function() {
+    // Map page names to image filenames
+    const pageToImage = {
+      "minecraft": "game1.png", // Minecraft image
+      "fortnite": "game2.png", // Fortnite image
+      "roblox": "game3.png", // Roblox image
+      "counter-strike-2": "game4.png", // Counter-Strike 2 image
+      "apex-legends": "game5.png" // Apex Legends image
+    };
+
+    // Get the current page name without extension
+    const page = window.location.pathname.split('/').pop().replace('.html', '').toLowerCase(); // Get page name
+
+    // Find the .game-info-bar element
+    const infoBar = document.querySelector('.game-info-bar'); // Get the game info bar
+    if (infoBar && pageToImage[page]) { // If the info bar exists and image mapping exists
+      infoBar.style.backgroundImage = `url('${pageToImage[page]}')`; // Set background image
+    }
+  });
+  </script> <!-- End of background image script -->
+</body> <!-- End of body section -->
+</html> <!-- End of HTML document -->
